@@ -30,7 +30,7 @@ class Dish(models.Model):
     ingredients = models.ManyToManyField(
         Ingredient, verbose_name='ингредиенты', through='DishIngredient')
     img = models.ImageField(upload_to=custom_save_path,
-                            verbose_name='изображение', default='/static/img/no-image.png')
+                            verbose_name='изображение', default='img/no-image.png')
     bookmarks = models.ManyToManyField(
         User, verbose_name='закладки', blank=True)
     description = models.TextField(verbose_name='рецепт')
