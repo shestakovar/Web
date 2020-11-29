@@ -1,0 +1,21 @@
+events {}
+http {
+    include NGINX_PATH/mime.types;
+    server {
+        listen 80;
+        access_log SITE_PATH/logs/access.log;
+        error_log SITE_PATH/logs/error.log;
+
+        location / {
+            proxy_pass http://127.0.0.1:8000;         # <- let nginx pass traffic to the gunicorn server
+        }
+
+        location /static {
+            root SITE_PATH/dish;
+        }
+
+        location /img {
+            root SITE_PATH/dish/media;
+        }
+    }
+}

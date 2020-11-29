@@ -26,3 +26,12 @@ venv.bak/
 
 # Django media
 **/media
+
+# Django migrations
+**/migrations
+
+# Django collected static
+dish/static
+
+# Nginx configured config
+dish/nginx.conf
