@@ -15,4 +15,4 @@
 
 ##### Stop server
 1) Stop server (Ctrl+C)
-2) Stop nginx: nging -s stop
+2) Stop nginx: nginx -s stop
