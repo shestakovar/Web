@@ -22,22 +22,20 @@ class HomeAPIView(viewsets.ModelViewSet):
         list_dishes = self.queryset
         query = self.request.query_params.getlist('ingredient_list')
         if (len(query) != 0):
-            list_dishes = list_dishes.filter(ingredients__in=query).distinct()
+            list_dishes = list_dishes.has_ingredients(query)
         query = self.request.query_params.get('sortBy')
         if (query is not None):
             if (query == 'favs'):
-                list_dishes = list_dishes.annotate(
-                    count=Count('bookmarks')).order_by('-count')
+                list_dishes = list_dishes.most_favs()
             elif (query == 'comments'):
-                list_dishes = list_dishes.annotate(
-                    count=Count('comment')).order_by('-count')
+                list_dishes = list_dishes.most_comments()
             else:
-                list_dishes = list_dishes.order_by('name')
+                list_dishes = list_dishes.alph()
 
         query = self.request.query_params.get('favourite')
         user = self.request.user
         if (query is not None and user is not None):
-            list_dishes = list_dishes.filter(bookmarks=self.request.user)
+            list_dishes = list_dishes.in_bookmarks(self.request.user)
 
         return list_dishes
 

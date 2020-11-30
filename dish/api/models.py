@@ -7,6 +7,8 @@ from django.utils import timezone
 import uuid
 import os
 
+from .managers import DishManager
+
 
 def custom_save_path(instance, filename):
     ext = filename.split('.')[-1]
@@ -34,6 +36,7 @@ class Dish(models.Model):
     bookmarks = models.ManyToManyField(
         User, verbose_name='закладки', blank=True)
     description = models.TextField(verbose_name='рецепт')
+    objects = DishManager.as_manager()
 
     def __str__(self):
         return self.name

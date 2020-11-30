@@ -15,6 +15,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
 from django.db.models import Count
+from api.managers import DishManager
 
 
 class HomeListView(ListView):
@@ -25,11 +26,11 @@ class HomeListView(ListView):
     def get_queryset(self):
         query = self.request.GET.get('sortBy')
         if (query == 'favs'):
-            return self.model.objects.annotate(count=Count('bookmarks')).order_by('-count')
+            return self.model.objects.most_favs()
         elif (query == 'comments'):
-            return self.model.objects.annotate(count=Count('comment')).order_by('-count')
+            return self.model.objects.most_comments()
         else:
-            return self.model.objects.order_by('name')
+            return self.model.objects.alph()
 
 
 class FindListView(HomeListView):
@@ -41,18 +42,15 @@ class FindListView(HomeListView):
             self.form = IngredientForm(self.request.GET)
             if self.form.is_valid():
                 temp = self.form.cleaned_data.get('ingredient_list')
-                list_dishes = self.model.objects.filter(
-                    ingredients__in=temp).distinct()
+                list_dishes = self.model.objects.has_ingredients(temp)
 
             query = self.request.GET.get('sortBy')
             if (query == 'favs'):
-                list_dishes = list_dishes.annotate(count=Count(
-                    'bookmarks', distinct=True)).order_by('-count')
+                list_dishes = list_dishes.most_favs()
             elif (query == 'comments'):
-                list_dishes = list_dishes.annotate(count=Count(
-                    'comment', distinct=True)).order_by('-count')
+                list_dishes = list_dishes.most_comments()
             else:
-                list_dishes = list_dishes.order_by('name')
+                list_dishes = list_dishes.alph()
         else:
             self.form = IngredientForm
         return list_dishes
@@ -67,7 +65,7 @@ class FavouriteListView(LoginRequiredMixin, HomeListView):
     template_name = 'favourites.html'
 
     def get_queryset(self):
-        return super().get_queryset().filter(bookmarks=self.request.user)
+        return super().get_queryset().in_bookmarks(self.request.user)
 
 
 class HomeDetailView(DetailView):
