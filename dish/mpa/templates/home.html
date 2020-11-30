@@ -48,7 +48,7 @@
         {% endfor %}
       </ul>
       </p>
-      <a href="/detail/{{i.id}}" class="btn btn-primary mt-auto">Перейти</a>
+      <a href="{% url 'detail_page' i.pk %}" class="btn btn-primary mt-auto">Перейти</a>
     </div>
     <div class="card-footer">
       Комментарии: {{ i.comment_set.count }}

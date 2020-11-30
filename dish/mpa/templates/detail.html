@@ -15,7 +15,7 @@
                 <h5 class="card-title">{{dish.name}}</h5>
                 <p class="card-text">Ингредиенты:{% for each in dish.dishingredient_set.all %}<li> {{ each.ingredient }}
                         {{each.weight}} гр</li>{% endfor %}</p>
-                <p class="card-text"><small class="text-muted"><a href="/">Вернуться назад</a></small></p>
+                <p class="card-text"><small class="text-muted"><a href="{{request.META.HTTP_REFERER}}">Вернуться назад</a></small></p>
                 <form method='POST' action="/add_remove_bookmark/{{dish.id}}">
                     {% csrf_token %}
                     {% if request.user in dish.bookmarks.all %}
