@@ -78,16 +78,22 @@ class Question(models.Model):
     content = models.TextField(verbose_name='Текст вопроса')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField(default=timezone.now)
+    
+    def __str__(self):
+        return self.title
 
     class Meta:
-        verbose_name = 'Вопрос'
-        verbose_name_plural = 'Вопросы'
+        verbose_name = 'вопрос'
+        verbose_name_plural = 'вопросы'
 
 class Answer(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField(verbose_name='Ответ')
-    author = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.question) + ': ' + str(self.author)
 
     class Meta:
-        verbose_name = 'Ответ'
-        verbose_name_plural = 'Ответы'
+        verbose_name = 'ответ'
+        verbose_name_plural = 'ответы'
