@@ -2,12 +2,12 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from .models import Dish, Comment, Ingredient
+from .models import Dish, Comment, Ingredient, Question, Answer
 from django.db.models import Count
 from django.contrib.auth.models import User
 
 from rest_framework import viewsets
-from .serializers import DishSerializer, CommentSerializer, UserSerializer, IngredientSerializer, CommentUpdateSerializer, UserUpdateSerializer
+from .serializers import DishSerializer, CommentSerializer, UserSerializer, IngredientSerializer, CommentUpdateSerializer, UserUpdateSerializer, QuestionSerializer, AnswerSerializer 
 from rest_framework import permissions
 from .permissions import IsOwnerOrReadOnly, IsCurrentUserOrReadOnly
 from .schema import DishSchema
@@ -83,3 +83,16 @@ class IngredientAPIView(viewsets.ModelViewSet):
         if self.request.method not in permissions.SAFE_METHODS:
             return [permissions.IsAdminUser()]
         return [permissions.IsAuthenticatedOrReadOnly()]
+
+
+class QuestionAPIView(viewsets.ModelViewSet):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
+class AnswerAPIView(viewsets.ModelViewSet):
+    queryset = Answer.objects.all()
+    serializer_class = AnswerSerializer
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]

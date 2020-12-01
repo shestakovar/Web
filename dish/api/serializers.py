@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Dish, Comment, Ingredient, DishIngredient
+from .models import Dish, Comment, Ingredient, DishIngredient, Question, Answer
 from django.contrib.auth.models import User
 
 
@@ -90,3 +90,23 @@ class UserUpdateSerializer(UserSerializer):
     class Meta:
         model = User
         fields = ('password', 'dish_set')
+
+class QuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Question
+        read_only_fields = ('date', 'author')
+        fields = '__all__'
+        
+        current_user = serializers.HiddenField(
+            default=serializers.CurrentUserDefault()
+        )
+
+class AnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Answer
+        read_only_fields = ('author', 'question')
+        fields = '__all__'
+        
+        current_user = serializers.HiddenField(
+            default=serializers.CurrentUserDefault()
+        )
