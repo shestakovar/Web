@@ -14,7 +14,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
-from django.db.models import Count
 from api.managers import DishManager
 
 

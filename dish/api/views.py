@@ -3,7 +3,6 @@ from django.shortcuts import render
 # Create your views here.
 
 from .models import Dish, Comment, Ingredient, Question, Answer
-from django.db.models import Count
 from django.contrib.auth.models import User
 
 from rest_framework import viewsets
