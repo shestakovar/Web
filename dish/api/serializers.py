@@ -91,22 +91,58 @@ class UserUpdateSerializer(UserSerializer):
         model = User
         fields = ('password', 'dish_set')
 
+
 class QuestionSerializer(serializers.ModelSerializer):
+    current_user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
+
     class Meta:
         model = Question
         read_only_fields = ('date', 'author')
         fields = '__all__'
-        
-        current_user = serializers.HiddenField(
-            default=serializers.CurrentUserDefault()
-        )
 
-class AnswerSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        validated_data['author'] = validated_data.pop('current_user')
+        return super().create(validated_data)
+
+
+class AnswerForQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Answer
-        read_only_fields = ('author', 'question')
+        fields = ('id', 'content', 'author')
+
+
+class QuestionRetrieveSerializer(serializers.ModelSerializer):
+    answer_set = AnswerForQuestionSerializer(many=True)
+
+    class Meta:
+        model = Question
+        fields = ('title', 'content', 'author', 'date', 'answer_set')
+
+
+class QuestionUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Question
+        fields = ('content',)
+
+
+class AnswerSerializer(serializers.ModelSerializer):
+    current_user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
+
+    class Meta:
+        model = Answer
+        read_only_fields = ('author',)
         fields = '__all__'
-        
-        current_user = serializers.HiddenField(
-            default=serializers.CurrentUserDefault()
-        )
+
+    def create(self, validated_data):
+        validated_data['author'] = validated_data.pop('current_user')
+        return super().create(validated_data)
+
+
+class AnswerUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Answer
+        fields = ('content',)

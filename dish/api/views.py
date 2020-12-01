@@ -7,7 +7,12 @@ from django.db.models import Count
 from django.contrib.auth.models import User
 
 from rest_framework import viewsets
-from .serializers import DishSerializer, CommentSerializer, UserSerializer, IngredientSerializer, CommentUpdateSerializer, UserUpdateSerializer, QuestionSerializer, AnswerSerializer 
+from .serializers import (DishSerializer, IngredientSerializer,
+                          CommentSerializer, CommentUpdateSerializer,
+                          UserSerializer, UserUpdateSerializer,
+                          QuestionSerializer, QuestionUpdateSerializer,
+                          QuestionRetrieveSerializer,
+                          AnswerSerializer, AnswerUpdateSerializer)
 from rest_framework import permissions
 from .permissions import IsOwnerOrReadOnly, IsCurrentUserOrReadOnly
 from .schema import DishSchema
@@ -91,8 +96,21 @@ class QuestionAPIView(viewsets.ModelViewSet):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
+    def get_serializer_class(self):
+        if self.action == 'update':
+            return QuestionUpdateSerializer
+        elif self.action == 'retrieve':
+            return QuestionRetrieveSerializer
+        return QuestionSerializer
+
+
 class AnswerAPIView(viewsets.ModelViewSet):
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
+    def get_serializer_class(self):
+        if self.action == 'update':
+            return AnswerUpdateSerializer
+        return AnswerSerializer
