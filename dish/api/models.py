@@ -71,3 +71,23 @@ class Comment(models.Model):
     class Meta:
         verbose_name = 'комментарий'
         verbose_name_plural = 'комментарии'
+
+
+class Question(models.Model):
+    title = models.CharField(max_length=255, verbose_name='Заголовок вопроса')
+    content = models.TextField(verbose_name='Текст вопроса')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        verbose_name = 'Вопрос'
+        verbose_name_plural = 'Вопросы'
+
+class Answer(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField(verbose_name='Ответ')
+    author = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Ответ'
+        verbose_name_plural = 'Ответы'
