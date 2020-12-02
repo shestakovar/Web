@@ -37,21 +37,22 @@ class FindListView(HomeListView):
 
     def get_queryset(self):
         list_dishes = []
+        self.form = IngredientForm
         if self.request.GET:
-            self.form = IngredientForm(self.request.GET)
-            if self.form.is_valid():
+            form = IngredientForm(self.request.GET)
+            if form.is_valid():
+                self.form = form
                 temp = self.form.cleaned_data.get('ingredient_list')
                 list_dishes = self.model.objects.has_ingredients(temp)
 
-            query = self.request.GET.get('sortBy')
-            if (query == 'favs'):
-                list_dishes = list_dishes.most_favs()
-            elif (query == 'comments'):
-                list_dishes = list_dishes.most_comments()
-            else:
-                list_dishes = list_dishes.alph()
-        else:
-            self.form = IngredientForm
+                query = self.request.GET.get('sortBy')
+                if (query == 'favs'):
+                    list_dishes = list_dishes.most_favs()
+                elif (query == 'comments'):
+                    list_dishes = list_dishes.most_comments()
+                else:
+                    list_dishes = list_dishes.alph()
+
         return list_dishes
 
     def get_context_data(self, **kwargs):
