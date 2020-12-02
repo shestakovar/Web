@@ -1,5 +1,12 @@
 events {}
 http {
+    proxy_cache_path SITE_PATH/cache/cache levels=1:2 keys_zone=mycache:32m max_size=1g;
+    proxy_temp_path SITE_PATH/cache/temp;
+    proxy_cache_methods GET;
+    proxy_cache_valid any 1h;
+    proxy_cache mycache;
+    add_header X-Proxy-Cache $upstream_cache_status;
+
     map $request_method $upstream_location {
         GET backend_balanced;
         default backend;
@@ -14,6 +21,7 @@ http {
     }
     include NGINX_PATH/mime.types;
     server {
+        gzip on;
         listen 80;
         access_log SITE_PATH/logs/access.log;
         error_log SITE_PATH/logs/error.log;
@@ -24,6 +32,7 @@ http {
 
         location /api/v1/ {
             proxy_pass http://$upstream_location$uri$is_args$args;         # <- let nginx pass traffic to the gunicorn server
+            proxy_no_cache 1;
         }
 
         location /api/v1/api-auth/logout/ {

@@ -35,3 +35,6 @@ dish/static
 
 # Nginx configured config
 dish/nginx.conf
+
+# Nginx cache
+cache
