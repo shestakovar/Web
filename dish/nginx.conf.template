@@ -19,6 +19,7 @@ http {
         error_log SITE_PATH/logs/error.log;
         client_max_body_size 10M;
         proxy_set_header Host $host;
+        more_set_headers "Server: Dish";
 
 
         location /api/v1/ {
