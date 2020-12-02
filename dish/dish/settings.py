@@ -126,3 +126,4 @@ STATIC_URL = '/collectedstatic/'
 MEDIA_ROOT = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/collectedstatic')
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+LOGIN_URL = 'login'
