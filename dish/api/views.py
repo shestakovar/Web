@@ -72,7 +72,7 @@ class UserAPIView(viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.action in ('update', 'partial_update', 'destroy'):
-            return [permissions.IsAuthenticated, IsCurrentUserOrReadOnly()]
+            return [permissions.IsAuthenticated(), IsCurrentUserOrReadOnly()]
         elif self.action == 'create':
             return [permissions.AllowAny()]
         return [permissions.IsAuthenticated()]
