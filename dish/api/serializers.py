@@ -110,11 +110,11 @@ class QuestionSerializer(serializers.ModelSerializer):
 class AnswerForQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Answer
-        fields = ('id', 'content', 'author')
+        fields = ('id', 'content', 'author', 'date')
 
 
 class QuestionRetrieveSerializer(serializers.ModelSerializer):
-    answer_set = AnswerForQuestionSerializer(many=True)
+    answer_set = AnswerForQuestionSerializer(many=True, read_only=True)
 
     class Meta:
         model = Question
@@ -134,7 +134,7 @@ class AnswerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Answer
-        read_only_fields = ('author',)
+        read_only_fields = ('author', 'date')
         fields = '__all__'
 
     def create(self, validated_data):
