@@ -46,14 +46,14 @@ class HomeAPIView(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.request.method not in permissions.SAFE_METHODS:
             return [permissions.IsAdminUser()]
-        return [permissions.IsAuthenticatedOrReadOnly()]
+        return [permissions.IsAuthenticated()]
 
 
 class CommentAPIView(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+        permissions.IsAuthenticated, IsOwnerOrReadOnly]
 
     def get_serializer_class(self):
         if self.action == 'update':
@@ -64,7 +64,6 @@ class CommentAPIView(viewsets.ModelViewSet):
 class UserAPIView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_serializer_class(self):
         if self.action == 'update':
@@ -73,10 +72,10 @@ class UserAPIView(viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.action in ('update', 'partial_update', 'destroy'):
-            return [IsCurrentUserOrReadOnly()]
+            return [permissions.IsAuthenticated, IsCurrentUserOrReadOnly()]
         elif self.action == 'create':
             return [permissions.AllowAny()]
-        return [permissions.IsAuthenticatedOrReadOnly()]
+        return [permissions.IsAuthenticated()]
 
 
 class IngredientAPIView(viewsets.ModelViewSet):
@@ -86,14 +85,14 @@ class IngredientAPIView(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.request.method not in permissions.SAFE_METHODS:
             return [permissions.IsAdminUser()]
-        return [permissions.IsAuthenticatedOrReadOnly()]
+        return [permissions.IsAuthenticated()]
 
 
 class QuestionAPIView(viewsets.ModelViewSet):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
     permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+        permissions.IsAuthenticated, IsOwnerOrReadOnly]
 
     def get_serializer_class(self):
         if self.action == 'update':
@@ -107,7 +106,7 @@ class AnswerAPIView(viewsets.ModelViewSet):
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
     permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+        permissions.IsAuthenticated, IsOwnerOrReadOnly]
 
     def get_serializer_class(self):
         if self.action == 'update':

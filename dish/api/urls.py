@@ -16,7 +16,6 @@ router.register(r'answers', AnswerAPIView)
 
 
 urlpatterns = [
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('openapi', get_schema_view(
         title="Your Project",
         description="API for all things …",
