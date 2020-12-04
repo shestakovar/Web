@@ -23,6 +23,9 @@ http {
     server {
         gzip on;
         listen 80;
+        listen 443 ssl http2;
+        ssl_certificate SITE_PATH/localhost.crt;
+        ssl_certificate_key SITE_PATH/localhost.key;
         access_log SITE_PATH/logs/access.log;
         error_log SITE_PATH/logs/error.log;
         client_max_body_size 10M;
@@ -69,6 +72,11 @@ http {
 
         location /status/ {
             stub_status;
+        }
+
+        location /index.html {
+            root SITE_PATH/dish/static;
+            http2_push /img/image.jpg;
         }
 
     }

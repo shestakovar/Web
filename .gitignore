@@ -31,10 +31,15 @@ venv.bak/
 **/migrations
 
 # Django collected static
-dish/static
+dish/static/*
+!dish/static/index.html
 
 # Nginx configured config
 dish/nginx.conf
 
 # Nginx cache
 cache
+
+# SSL Certs
+*.crt
+*.key

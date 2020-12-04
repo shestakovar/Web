@@ -1,7 +1,20 @@
 # Web
 
-## Configure NGINX
-* ./configure_nginx.sh
+## Before start
+1. Create SSL cert
+```bash
+$ openssl req -x509 -out localhost.crt -keyout localhost.key \
+  -newkey rsa:2048 -nodes -sha256 \
+  -subj '/CN=localhost' -extensions EXT -config <( \
+   printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
+```
+
+2. Configure nginx
+```bash
+$ ./configure_nginx.sh
+```
+
+3. Place some image as 'static/img/image.jpg'
 
 ## Usage
 ##### First start
