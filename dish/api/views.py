@@ -6,7 +6,8 @@ from .models import Dish, Comment, Ingredient, Question, Answer
 from django.contrib.auth.models import User
 
 from rest_framework import viewsets
-from .serializers import (DishSerializer, IngredientSerializer,
+from .serializers import (DishSerializer, DishRetrieveSerializer,
+                          IngredientSerializer,
                           CommentSerializer, CommentUpdateSerializer,
                           UserSerializer, UserUpdateSerializer,
                           QuestionSerializer, QuestionUpdateSerializer,
@@ -47,6 +48,11 @@ class HomeAPIView(viewsets.ModelViewSet):
         if self.request.method not in permissions.SAFE_METHODS:
             return [permissions.IsAdminUser()]
         return [permissions.IsAuthenticated()]
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return DishRetrieveSerializer
+        return DishSerializer
 
 
 class CommentAPIView(viewsets.ModelViewSet):

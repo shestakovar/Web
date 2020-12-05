@@ -5,9 +5,11 @@ from django.contrib.auth.models import User
 
 
 class DishIngredientSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(source='ingredient.name', read_only=True)
+
     class Meta:
         model = DishIngredient
-        fields = ('ingredient', 'weight')
+        fields = ('ingredient', 'weight', 'name')
 
 
 class IngredientSerializer(serializers.ModelSerializer):
@@ -22,9 +24,9 @@ class DishSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Dish
-        read_only_fields = ('id', 'bookmarks', 'comment_set')
+        read_only_fields = ('id', 'bookmarks')
         fields = ('id', 'name', 'img', 'description',
-                  'dishingredient_set', 'bookmarks', 'comment_set')
+                  'dishingredient_set', 'bookmarks')
 
     def create(self, validated_data):
         ingredients = validated_data.pop('dishingredient_set')
@@ -42,6 +44,24 @@ class DishSerializer(serializers.ModelSerializer):
             DishIngredient.objects.create(
                 dish=instance, ingredient=ingr['ingredient'], weight=ingr['weight'])
         return instance
+
+
+class CommentForDishSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Comment
+        read_only_fields = ('date', 'author')
+        fields = ('id', 'content', 'date', 'author')
+
+
+class DishRetrieveSerializer(DishSerializer):
+    comment_set = CommentForDishSerializer(many=True)
+
+    class Meta:
+        model = Dish
+        read_only_fields = ('id', 'bookmarks', 'comment_set')
+        fields = ('id', 'name', 'img', 'description',
+                  'dishingredient_set', 'bookmarks', 'comment_set')
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -65,14 +85,15 @@ class CommentUpdateSerializer(serializers.ModelSerializer):
         fields = ('content',)
 
 
-class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+class DishForUserSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = User
-        read_only_fields = ('dish_set',)
-        fields = ('username', 'password', 'dish_set')
+        model = Dish
+        read_only_fields = ('id', 'name')
+        fields = ('id', 'name')
 
+
+class UserBasicSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = super().create(validated_data)
         user.set_password(validated_data['password'])
@@ -86,7 +107,18 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class UserUpdateSerializer(UserSerializer):
+class UserSerializer(UserBasicSerializer):
+    password = serializers.CharField(write_only=True)
+    dish_set = DishForUserSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = User
+        fields = ('username', 'password', 'dish_set')
+
+
+class UserUpdateSerializer(UserBasicSerializer):
+    password = serializers.CharField(write_only=True)
+
     class Meta:
         model = User
         fields = ('password', 'dish_set')
