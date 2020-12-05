@@ -48,3 +48,6 @@ $ ./configure_nginx.sh
 * Создание/удаление/изменение вопроса
 * Просмотр ответов к вопросам
 * Создание/удаление/изменение ответов
+
+## Use-case диаграмма
+![Изображение](https://github.com/shestakovar/Web/blob/lab_01/docs/img/use_case.png)
