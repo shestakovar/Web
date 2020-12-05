@@ -1,0 +1,77 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        {% url 'home' as url_home %}
+        <li class="nav-item {% if url_home == request.path %}active{% endif %}">
+          <a class="nav-link" href="{{url_home}}">Главная <span class="sr-only">(current)</span></a>
+        </li>
+        {% url 'find' as url_find %}
+        <li class="nav-item {% if url_find == request.path %}active{% endif %}">
+          <a class="nav-link" href="{{url_find}}">Что бы приготовить?</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ml-auto">
+        {% if request.user.is_authenticated %}
+        {% url 'favourites' as url_favs %}
+        <li class="nav-item {% if url_favs == request.path %}active{% endif %}">
+          <a class="nav-link" href="{{url_favs}}">Закладки</a>
+        </li>
+        {% url 'logout' as url_logout %}
+        <li class="nav-item {% if url_logout == request.path %}active{% endif %}">
+          <a class="nav-link" href="{{url_logout}}?next={{request.path}}">Выйти</a>
+        </li>
+        {{request.user}}
+        {% else %}
+        {% url 'login' as url_login %}
+        <li class="nav-item {% if url_login == request.path %}active{% endif %}">
+          <a class="nav-link" href="{{url_login}}?next={{request.path}}">Войти</a>
+        </li>
+        {% endif %}
+
+
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container-fluid bg-light">
+    {% block sort %}
+    {% endblock %}
+  </div>
+
+
+  <div class="container-fluid bg-light">
+    {% block content %}
+    {% endblock %}
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

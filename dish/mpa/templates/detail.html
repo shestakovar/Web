@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{{dish.name}}{% endblock %}
+
+{% block content %}
+<div class="card full-screen py-3">
+    <div class="row no-gutters">
+        <div class="col-md-6">
+            <img src="{{dish.img.url}}" class="card-img-top p-2" alt="...">
+        </div>
+        <div class="col-md-6">
+            <div class="card-body">
+                <h5 class="card-title">{{dish.name}}</h5>
+                <p class="card-text">Ингредиенты:{% for each in dish.dishingredient_set.all %}<li> {{ each.ingredient }}
+                        {{each.weight}} гр</li>{% endfor %}</p>
+                <p class="card-text"><small class="text-muted"><a href="{{request.META.HTTP_REFERER}}">Вернуться назад</a></small></p>
+                <form method='POST' action="/add_remove_bookmark/{{dish.id}}">
+                    {% csrf_token %}
+                    {% if request.user in dish.bookmarks.all %}
+                    <button type='submit'>Удалить из закладок</button>
+                    {% else %}
+                    <button type='submit'>Добавить в закладки</button>
+                    {% endif %}
+                </form>
+                <div>В закладках у {{dish.bookmarks.all.count}} пользователя(ей)</div>
+            </div>
+        </div>
+    </div>
+    <div class="row no-gutters">
+        <div class="description">
+            {{dish.description| linebreaks}}
+        </div>
+    </div>
+</div>
+
+
+<div class="comments">
+    <h3 class="title-comments">Комментарии ({{dish.comment_set.count}})</h3>
+    {% for comment in dish.comment_set.all %}
+    <div class="media">
+        <div class="media-body">
+            <div class="media-heading">
+                <div class="author">{{ comment.author }}</div>
+                <div class="metadata">
+                    <span class="date">{{ comment.date }}</span>
+                </div>
+            </div>
+            <div class="media-text">{{ comment.content|linebreaks }}</div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="alert alert-info" role="alert">
+        Оставьте первый комментарий!
+    </div>
+    {% endfor %}
+</div>
+
+<div class="comments new-comment">
+    {% if request.user.is_authenticated %}
+    <div class="form-group">
+        <form method="POST">
+            {% csrf_token %}
+            {{form|crispy}}
+            <input type="submit" class="btn btn-success">
+        </form>
+    </div>
+    {% else %}
+    {% url 'login' as url_login %}
+    <div class="alert alert-info" role="alert"><a href="{{url_login}}" class="alert-link">Войдите</a>, чтобы добавить
+        комментарий</div>
+    {% endif %}
+</div>
+{% endblock %}
