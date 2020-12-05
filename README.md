@@ -49,8 +49,14 @@ $ ./configure_nginx.sh
 * Просмотр ответов к вопросам
 * Создание/удаление/изменение ответов
 
-## Use-case диаграмма
-![Изображение](https://github.com/shestakovar/Web/blob/lab_01/docs/img/use_case.png)
+##### Use-case диаграмма
+<details><summary>Развернуть</summary>
 
-## Er диаграмма
+![Изображение](https://github.com/shestakovar/Web/blob/lab_01/docs/img/use_case.png)
+</details>
+
+##### Er диаграмма
+<details><summary>Развернуть</summary>
+
 ![Изображение](https://github.com/shestakovar/Web/blob/lab_01/docs/img/er.png)
+</details>
