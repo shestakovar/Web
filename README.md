@@ -51,3 +51,6 @@ $ ./configure_nginx.sh
 
 ## Use-case диаграмма
 ![Изображение](https://github.com/shestakovar/Web/blob/lab_01/docs/img/use_case.png)
+
+## Er диаграмма
+![Изображение](https://github.com/shestakovar/Web/blob/lab_01/docs/img/er.png)
