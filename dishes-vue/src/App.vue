@@ -1,15 +1,20 @@
 <template>
-  <login/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <div id="app">
+    <Navbar/>
+    <div class="container">
+      <router-view/>
+    </div>
+    <Footer/>
+  </div>
 </template>
 
 <script>
-import login from './components/login.vue'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 
 export default {
-  name: 'App',
-  components: {
-    login
-  }
+  components: {Navbar, Footer},
 }
 </script>
 
@@ -20,44 +25,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
-  background: #FFEDC4;
-}
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
-.login_title {
-  font-family: Roboto, sans-serif;
-  font-weight:;
-  font-size: 68px;
-  font-style: normal;
-  font-weight: 200;
-  line-height: 110px;
-  letter-spacing: 4px;
-  text-align: center;
-  text-transform: uppercase;
-  color: black;
-}
-input {
-  width: 30%;
-}
-button {
-  width: 30%;
-  border: 0px;
-}
-button.login {
-  border-radius: 5px;
-  background-color: #6D6678;
-  color: #ffffff;
-}
-
-button.registration {
-  border: 2px solid #6D6678;
-  color: #6D6678;
-  border-radius: 5px;
-  background: none;
-}
-
-a.forgot_pass {
-  color: #898989;
+  background-color: #FFEDC3;
+  /* height: 960px; */
 }
 </style>
