@@ -8,9 +8,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-            <router-link to="/" class="nav-item nav-link">Главная<span class="sr-only">(current)</span></router-link>
-            <a class="nav-item nav-link">Рецепты</a>
-            <a class="nav-item nav-link">Вопрос-ответ</a>
+            <router-link to="/" class="nav nav-link">Главная<span class="sr-only">(current)</span></router-link>
+            <router-link to="/dishes" class="nav nav-link">Рецепты<span class="sr-only">(current)</span></router-link>
+            <router-link to="/" class="nav nav-link">Вопрос-ответ<span class="sr-only">(current)</span></router-link>
             </div>
         </div>
     </div>
@@ -29,7 +29,11 @@ export default {
 .navbar {
     background-color: #361D62;
 }
-nav-link :active {
-    color: white;
+
+.nav {
+    color: ghostwhite;
+}
+.nav:hover {
+    color:rgb(138, 109, 145)
 }
 </style>
