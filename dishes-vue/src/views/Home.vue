@@ -1,10 +1,24 @@
 <template>
-<div class="reciept_day">
-  <h2>Рецепт дня</h2>
-</div>
-<div class="reciepts_new">
-  <h2>Новые рецепты</h2>
-  <div class="container">
+<div class="mt-5 recipes_new">
+      <div class="mb-3 container" style="border: 1px solid black">
+        <div class="row" style="background-color: #FFF3D8;">
+          <div class="col-4">
+            <img class="p-3" src="@/assets/dish1.png" alt="">
+          </div>
+          <div class="recipes_new_title col-8">
+            Хачапури по-аджарски
+            <p class="card-text">
+              Хачапури по-аджарски сразу из печи - ароматные, с растопленным сыром сулу- гуни и нежным хрустящим краешком. Отломите кусочек, окуните его в сыр, сдобренный маслом и куриным яйцом, а потом попробуйте отказаться от следующего кусочка. Поверьте, это сделать невозможно.
+            </p>
+          </div>
+        </div>
+      </div>
+  <div class="recipes_new_title">
+    <span><img style="transform: scale(0.7,0.7)" src="@/assets/decor_1.png" alt=""></span>
+    <span>Новые рецепты</span>
+    <span><img style="transform: scale(-0.7,0.7)" src="@/assets/decor_1.png" alt=""></span>
+  </div>
+  <div class="container mt-4">
     <div class="row">
       <img class="col-4" src="@/assets/dish1.png" alt="">
       <img class="col-4" src="@/assets/dish1.png" alt="">
@@ -20,6 +34,7 @@
       <img class="col-4" src="@/assets/dish1.png" alt="">
       <img class="col-4" src="@/assets/dish1.png" alt="">
     </div>
+    <router-link to='/dishes'><button class="mb-5 mt-4 all_dishes">Показать все рецепты</button></router-link>
   </div>
 </div>
 </template>
@@ -31,3 +46,36 @@ export default {
   }
 }
 </script>
+
+<style>
+  button {
+    height: 34px;
+    width: 30%;
+    border: 0px;
+  }
+  button.all_dishes {
+    border-radius: 5px;
+    background-color: #6D6678;
+    color: #ffffff;
+    text-transform: uppercase;
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+  .recipes_new_title {
+    font-family: Roboto;
+    font-size: 42px;
+    font-weight: 400;
+    line-height: 68px;
+    letter-spacing: 0px;
+    text-align: center;
+    color: #361D62;
+  }
+  .card-text {
+    font-family: Roboto;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 29px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+</style>

@@ -8,9 +8,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-            <router-link to="/" class="nav-item nav-link" href="#">Home <span class="sr-only">(current)</span></router-link>
-            <a class="nav-item nav-link" href="#">Features</a>
-            <a class="nav-item nav-link" href="#">Pricing</a>
+            <router-link to="/" class="nav-item nav-link">Главная<span class="sr-only">(current)</span></router-link>
+            <a class="nav-item nav-link">Рецепты</a>
+            <a class="nav-item nav-link">Вопрос-ответ</a>
             </div>
         </div>
     </div>
