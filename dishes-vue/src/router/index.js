@@ -25,6 +25,7 @@ const routes = [
   {
     path: '/dish/:id',
     name: 'Dish',
+    props: true,
     component: () => import('../views/Dish.vue')
   }
 ]

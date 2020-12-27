@@ -6,6 +6,7 @@ http {
     proxy_cache_valid any 1h;
     proxy_cache mycache;
     add_header X-Proxy-Cache $upstream_cache_status;
+    add_header Access-Control-Allow-Origin *;
 
     map $request_method $upstream_location {
         GET backend_balanced;

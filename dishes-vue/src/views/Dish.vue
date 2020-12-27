@@ -1,7 +1,8 @@
 <template>
+<div>
   <div class="mt-5 container">
     <div class="dish_title row">
-      <div class="title_text text-left col-10">Хачапури по-аджарски</div>
+      <div class="title_text text-left col-10">{{dish.name}}</div>
       <div class="title_img text-right col-2">
         <a href="#"><img src="@/assets/fav.svg" alt=""></a>
       </div>
@@ -10,32 +11,16 @@
   <div class="container mt-5">
     <div class="row mb-5">
       <div class="col-7">
-        <img src="@/assets/dish1.png" alt="">
+        <img :src="dish.img" alt="">
       </div>
       <div class="ingredients col-5">
         <ul class="list-group">
           <li class="ingredients_title list-group-item align-items-center">
             Ингредиенты
           </li>
-          <li class="ingredients_a list-group-item d-flex justify-content-between align-items-center">
-            Молоко (теплое)
-            <span class="">125 мл</span>
-          </li>
-          <li class="ingredients_b list-group-item d-flex justify-content-between align-items-center">
-            Вода (теплая)
-            <span class="">125 мл</span>
-          </li>
-          <li class="ingredients_a list-group-item d-flex justify-content-between align-items-center">
-            Яйца (куриные)
-            <span class="">1 шт</span>
-          </li>
-          <li class="ingredients_b list-group-item d-flex justify-content-between align-items-center">
-            Масло растительное
-            <span class="">2 ст.л</span>
-          </li>
-          <li class="ingredients_a list-group-item d-flex justify-content-between align-items-center">
-            Мука
-            <span class="">400 г</span>
+          <li v-for="(post, index) of dish.dishingredient_set" :key="index" class="ingredients_a list-group-item d-flex justify-content-between align-items-center">
+            {{post.name}}
+            <span class="">{{post.weight}} гр</span>
           </li>
           
           
@@ -46,16 +31,12 @@
   <div class="container">
     <div class="stage_title mb-4">
       <h3>Этапы приготовления</h3>
+      {{dish.description}}
     </div>
     sadas
   </div>
+  </div>
 </template>
-
-<script>
-export default {
-
-}
-</script>
 
 <style>
   .dish_title {
@@ -87,5 +68,26 @@ export default {
     background-color: #534B60;
     color: #fff; 
   }
+  img {
+    max-width: 100%;
+  }
   
 </style>
+
+<script>
+import axios from 'axios'
+
+export default {
+  data: () => ({
+    dish: null
+  }),
+
+created() {
+  axios.get("http://localhost/api/v1/dishes/"+this.$route.params.id)
+  .then(response => {
+    this.dish = response.data
+    console.log(this.dish)
+  })
+}
+}
+</script>

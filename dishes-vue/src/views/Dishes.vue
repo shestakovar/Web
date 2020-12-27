@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="container mt-5">
     <div class="finder">
       <div class="row">
@@ -157,14 +158,14 @@
       </div>
     </div>
   </div>
-  <div class="mt-5 container" style="border: 1px solid black">
-    <router-link to="/dish/1">
+  <div v-for="(post, index) of dishes" :key="index" class="mt-5 container" style="border: 1px solid black">
+    <router-link :to="{ name: 'Dish', params: { id: post.id }}">
     <div class="row" style="background-color: #FFF3D8;">
       <div class="col-4">
-        <img class="p-3" src="@/assets/dish1.png" alt="" />
+        <img class="p-3" :src="post.img" alt="" />
       </div>
       <div class="recipes_new_title col-8">
-        Хачапури по-аджарски
+        {{post.name}}
         <p class="card-text">
           Хачапури по-аджарски сразу из печи - ароматные, с растопленным сыром
           сулу- гуни и нежным хрустящим краешком. Отломите кусочек, окуните его
@@ -176,21 +177,6 @@
     </router-link>
 
   </div>
-  <div class="mt-5 container" style="border: 1px solid black">
-    <div class="row" style="background-color: #FFF3D8;">
-      <div class="col-4">
-        <img class="p-3" src="@/assets/dish1.png" alt="" />
-      </div>
-      <div class="recipes_new_title col-8">
-        Хачапури по-аджарски
-        <p class="card-text">
-          Хачапури по-аджарски сразу из печи - ароматные, с растопленным сыром
-          сулу- гуни и нежным хрустящим краешком. Отломите кусочек, окуните его
-          в сыр, сдобренный маслом и куриным яйцом, а потом попробуйте
-          отказаться от следующего кусочка. Поверьте, это сделать невозможно.
-        </p>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -241,4 +227,25 @@ button.registration {
 a:hover {
   text-decoration: none;
 }
+img {
+  max-width: 100%;
+}
 </style>
+
+<script>
+import axios from 'axios'
+
+export default {
+  data: () => ({
+    dishes: []
+  }),
+
+created() {
+  axios.get("http://localhost/api/v1/dishes/")
+  .then(response => {
+    this.dishes = response.data
+    console.log(this.dishes)
+  })
+}
+}
+</script>
