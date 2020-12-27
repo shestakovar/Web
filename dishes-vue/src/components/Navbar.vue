@@ -1,21 +1,46 @@
 <template>
 <header>
-    <nav class="navbar navbar-expand-lg">
-    <div class="container">
-        <router-link to="/" class="navbar-brand"><img src="@/assets/logo.png" alt=""></router-link>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-            <router-link to="/" class="nav nav-link">Главная<span class="sr-only">(current)</span></router-link>
-            <router-link to="/dishes" class="nav nav-link">Рецепты<span class="sr-only">(current)</span></router-link>
-            <router-link to="/" class="nav nav-link">Вопрос-ответ<span class="sr-only">(current)</span></router-link>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <div class="collapse navbar-collapse">
+                <router-link to="/"><img src="@/assets/logo.png" alt=""></router-link>
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <router-link 
+                    to="/"
+                    tag="li"
+                    active-class="active">
+                    <li class="nav-item nav-link">
+                        Главная
+                    </li>
+                </router-link>
+                <router-link 
+                    to="/dishes"
+                    tag="li"
+                    active-class="active">
+                    <li class="nav-item nav-link">
+                        Рецепты
+                    </li>
+                </router-link>
+                <router-link 
+                    to="/questions"
+                    tag="li"
+                    active-class="active">
+                    <li class="nav-item nav-link">
+                        Вопрос-ответ
+                    </li>
+                </router-link>
+                </ul>
+                <div class="form-inline my-2 my-lg-0">
+                <router-link 
+                    to="/user"
+                    tag="li"
+                    active-class="">
+                <li class="btn btn-link" style="background-color: #75717C; color:white;">{User_name}</li>
+                </router-link>
+                </div>
             </div>
         </div>
-    </div>
-
-    </nav>
+     </nav>
 </header>
 </template>
 
@@ -34,6 +59,6 @@ export default {
     color: ghostwhite;
 }
 .nav:hover {
-    color:rgb(138, 109, 145)
+    color:rgb(201, 175, 207)
 }
 </style>
