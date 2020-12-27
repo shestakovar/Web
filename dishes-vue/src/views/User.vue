@@ -63,6 +63,9 @@
                 </table>
               </div>
             </div>
+            <div class="col-12 mb-4">
+                <button class="primary">Добавить рецепт</button>
+           </div>
         </div>
         <div class="user_data mt-5">
             <div class="user_reciepts_title">
@@ -94,6 +97,9 @@
                 </table>
               </div>
             </div>
+            <div class="col-12 mb-4">
+                <button class="primary">Задать вопрос</button>
+           </div>
         </div>
         <div class="user_data mt-5 mb-5">
         <div class="user_reciepts_title">
