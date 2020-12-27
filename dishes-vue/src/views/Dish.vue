@@ -83,11 +83,11 @@ export default {
   }),
 
 created() {
-  axios.get("http://localhost/api/v1/dishes/"+this.$route.params.id)
-  .then(response => {
-    this.dish = response.data
-    console.log(this.dish)
-  })
-}
+    axios.get("http://localhost/api/v1/dishes/"+this.$route.params.id)
+    .then(response => {
+      this.dish = response.data
+      console.log(this.dish)
+    })
+  }
 }
 </script>

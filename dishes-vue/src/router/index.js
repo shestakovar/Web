@@ -27,6 +27,11 @@ const routes = [
     name: 'Dish',
     props: true,
     component: () => import('../views/Dish.vue')
+  },
+  {
+    path: '/user',
+    name: 'User',
+    component: () => import('../views/User.vue')
   }
 ]
 
