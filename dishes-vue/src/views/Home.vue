@@ -22,7 +22,7 @@
   </div>
   <div class="container mt-4">
     <div class="row">
-      <router-link v-for="(post, index) of dishes" :key="index" :to="{ name: 'Dish', params: { id: post.id }}" class="col-4 embed-responsive embed-responsive-4by3">
+      <router-link v-for="(post, index) of dishes" :key="index" :to="{ name: 'Dish', params: { id: post.id }}" class="pulse col-4 embed-responsive embed-responsive-4by3">
         <img :src="post.img" alt="" class="embed-responsive-item p-3">
       </router-link>
     </div>
@@ -85,4 +85,42 @@ export default {
   img {
     object-fit: cover;
   }
+
+  .pulse:hover {
+    -webkit-animation-name: pulse;
+    animation-name: pulse;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+  }
+  @-webkit-keyframes pulse {
+  0% {
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  }
+  50% {
+  -webkit-transform: scale3d(1.05, 1.05, 1.05);
+  transform: scale3d(1.05, 1.05, 1.05);
+  }
+  100% {
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  }
+  }
+  @keyframes pulse {
+  0% {
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  }
+  50% {
+  -webkit-transform: scale3d(1.05, 1.05, 1.05);
+  transform: scale3d(1.05, 1.05, 1.05);
+  }
+  100% {
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  }
+  } 
+
 </style>
