@@ -8,7 +8,7 @@
             <router-link to='#'><button class="login">Задать вопрос</button></router-link>
    </div>
    <div class="questions mt-5">
-       <div v-for="(post, index) of questions" :key="index" class="row" style="border: 2px solid #6D6678;">
+       <div v-for="(post, index) of questions" :key="index" class="mt-3 mb-3 row" style="border: 2px solid #6D6678;">
             <div class="col-4 p-2" style="border-right:2px solid #6D6678;">
                 <img src="@/assets/avatar.svg" alt="">
                 <div class="mt-2">{{post.author}}</div>
