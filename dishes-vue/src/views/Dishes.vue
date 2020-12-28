@@ -49,9 +49,7 @@
               <span>
                 <select name="ingr_1" class="ingr mr-4">
                   <option selected="selected" disabled>Ингредиент №1</option>
-                  <option value="1">Укроп</option>
-                  <option value="2">Кошачья жопа</option>
-                  <option value="3">Картофель</option>
+                  <option v-for="(post, index) of ingredients" :key="index" :value="post.id">{{post.name}}</option>
                 </select>
               </span>
               <span>
@@ -78,10 +76,8 @@
             <div class="mt-2">
               <span>
                 <select name="ingr_1" class="ingr mr-4">
-                  <option selected="selected" disabled>Ингредиент №1</option>
-                  <option value="1">Укроп</option>
-                  <option value="2">Кошачья жопа</option>
-                  <option value="3">Картофель</option>
+                  <option selected="selected" disabled>Ингредиент №2</option>
+                  <option v-for="(post, index) of ingredients" :key="index" :value="post.id">{{post.name}}</option>
                 </select>
               </span>
               <span>
@@ -108,10 +104,8 @@
             <div class="mt-2">
               <span>
                 <select name="ingr_1" class="ingr mr-4">
-                  <option selected="selected" disabled>Ингредиент №1</option>
-                  <option value="1">Укроп</option>
-                  <option value="2">Кошачья жопа</option>
-                  <option value="3">Картофель</option>
+                  <option selected="selected" disabled>Ингредиент №3</option>
+                  <option v-for="(post, index) of ingredients" :key="index" :value="post.id">{{post.name}}</option>
                 </select>
               </span>
               <span>
@@ -237,13 +231,19 @@ import axios from 'axios'
 
 export default {
   data: () => ({
-    dishes: []
+    dishes: [],
+    ingredients: []
   }),
 
 created() {
   axios.get("http://localhost/api/v1/dishes/")
   .then(response => {
     this.dishes = response.data
+    console.log(this.dishes)
+  })
+  axios.get("http://localhost/api/v1/ingredients/")
+  .then(response => {
+    this.ingredients = response.data
     console.log(this.dishes)
   })
 }
