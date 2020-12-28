@@ -79,7 +79,7 @@ import axios from 'axios'
 
 export default {
   data: () => ({
-    dish: null
+    dish: ""
   }),
 
 created() {
