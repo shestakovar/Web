@@ -8,20 +8,20 @@
             <router-link to='#'><button class="login">Задать вопрос</button></router-link>
    </div>
    <div class="questions mt-5">
-       <div class="row" style="border: 2px solid #6D6678;">
+       <div v-for="(post, index) of questions" :key="index" class="row" style="border: 2px solid #6D6678;">
             <div class="col-4 p-2" style="border-right:2px solid #6D6678;">
                 <img src="@/assets/avatar.svg" alt="">
-                <div class="mt-2">{User.surname} {User.name}</div>
+                <div class="mt-2">{{post.author}}</div>
             </div>
             <div class="col-8">
                 <div class="question_title">
-                    <h2>{User.question.title}</h2>
+                    <h2>{{post.title}}</h2>
                 </div>
                 <div class="question_text text-left">
-                    Здравствуйте, дорогие пользователи сайта! Хотел приготовить макароны, уже купил их, но столкнулся с проблемой - не знаю, как долго нужно варить эти макароны. Бренд макарон - barilla. На коробке написано 8 минут, но не знаю насколько можно доверять производителю. Заранее спасибо!
+                    {{post.content}}
                 </div>
                 <div class="text-right">
-                    {user.question.date}
+                    {{post.date}}
                 </div>
             </div>
        </div>
@@ -30,8 +30,19 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
+  data: () => ({
+    questions: []
+  }),
 
+created() {
+  axios.get("http://localhost/api/v1/questions/")
+  .then(response => {
+    this.questions = response.data
+    console.log(this.questions)
+  })
+}
 }
 </script>
 
