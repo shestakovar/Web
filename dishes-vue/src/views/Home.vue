@@ -1,18 +1,20 @@
 <template>
-<div class="mt-5 recipes_new">
+<div v-if="dishes && dishes.length > 0" class="mt-5 recipes_new">
+  <router-link :to="{ name: 'Dish', params: { id: dishes[0].id }}" style="text-decoration: none;">
       <div class="mb-3 container" style="border: 1px solid black">
         <div class="row" style="background-color: #FFF3D8;">
-          <div class="col-4">
-            <img class="p-3" src="@/assets/dish1.png" alt="">
+          <div class="col-4 embed-responsive embed-responsive-4by3">
+            <img class="p-3 embed-responsive-item" :src="dishes[0].img" alt="">
           </div>
           <div class="recipes_new_title col-8">
-            Хачапури по-аджарски
+            {{dishes[0].name}}
             <p class="card-text">
               Хачапури по-аджарски сразу из печи - ароматные, с растопленным сыром сулу- гуни и нежным хрустящим краешком. Отломите кусочек, окуните его в сыр, сдобренный маслом и куриным яйцом, а потом попробуйте отказаться от следующего кусочка. Поверьте, это сделать невозможно.
             </p>
           </div>
         </div>
       </div>
+  </router-link>
   <div class="recipes_new_title">
     <span><img style="transform: scale(0.7,0.7)" src="@/assets/decor_1.png" alt=""></span>
     <span>Новые рецепты</span>
@@ -20,19 +22,9 @@
   </div>
   <div class="container mt-4">
     <div class="row">
-      <img class="col-4" src="@/assets/dish1.png" alt="">
-      <img class="col-4" src="@/assets/dish1.png" alt="">
-      <img class="col-4" src="@/assets/dish1.png" alt="">
-    </div>
-    <div class="row mt-4">  
-      <img class="col-4" src="@/assets/dish1.png" alt="">
-      <img class="col-4" src="@/assets/dish1.png" alt="">
-      <img class="col-4" src="@/assets/dish1.png" alt="">
-    </div>
-    <div class="row mt-4">
-      <img class="col-4" src="@/assets/dish1.png" alt="">
-      <img class="col-4" src="@/assets/dish1.png" alt="">
-      <img class="col-4" src="@/assets/dish1.png" alt="">
+      <router-link v-for="(post, index) of dishes" :key="index" :to="{ name: 'Dish', params: { id: post.id }}" class="col-4 embed-responsive embed-responsive-4by3">
+        <img :src="post.img" alt="" class="embed-responsive-item p-3">
+      </router-link>
     </div>
     <router-link to='/dishes'><button class="mb-5 mt-4 all_dishes">Показать все рецепты</button></router-link>
   </div>
@@ -40,10 +32,22 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'Home',
   components: {
-  }
+  },
+  data: () => ({
+    dishes: []
+  }),
+
+  created() {
+  axios.get("http://localhost/api/v1/dishes/")
+  .then(response => {
+    this.dishes = response.data
+  })
+}
 }
 </script>
 
@@ -77,5 +81,8 @@ export default {
     line-height: 29px;
     letter-spacing: 0em;
     text-align: left;
+  }
+  img {
+    object-fit: cover;
   }
 </style>
