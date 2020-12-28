@@ -23,7 +23,7 @@ const routes = [
     component: () => import('../views/Dishes.vue')
   },
   {
-    path: '/dish/:id',
+    path: '/dishes/:id',
     name: 'Dish',
     props: true,
     component: () => import('../views/Dish.vue')
