@@ -10,6 +10,8 @@ urlpatterns = [
     path('add_remove_bookmark/<int:pk>',
          views.add_remove_bookmark, name='add_remove_bookmark'),
     path('favourites', views.FavouriteListView.as_view(), name='favourites'),
+    path('questions', views.QuestionsListView.as_view(), name='questions'),
+    path('questions/<int:pk>', views.QuestionsDetailView.as_view(), name='question_detail_page')
 ]
 
 urlpatterns += [

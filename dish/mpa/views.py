@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 
-from api.models import Dish, Comment, Ingredient
+from api.models import Dish, Comment, Ingredient, Question
 from django.views.generic import ListView, DetailView, CreateView
-from .forms import DishForm, IngredientForm, CommentForm
+from .forms import DishForm, IngredientForm, CommentForm, QuestionForm, AnswerForm
 from django.urls import reverse, reverse_lazy
 
 from django.contrib.auth.forms import UserCreationForm
@@ -117,3 +117,52 @@ def add_remove_bookmark(request, pk):
         else:
             dish_obj.bookmarks.add(request.user)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+class QuestionsListView(ListView):
+    model = Question
+    template_name = 'questions.html'
+    context_object_name = 'list_questions'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = QuestionForm
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.author = request.user
+            obj.save()
+            form = QuestionForm
+
+        self.object_list = self.get_queryset()
+        context = super().get_context_data(**kwargs)
+        context['form'] = form
+        return self.render_to_response(context=context)
+
+
+class QuestionsDetailView(DetailView):
+    model = Question
+    template_name = 'question_detail.html'
+    context_object_name = 'question'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = AnswerForm
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.question = self.get_object()
+            obj.author = request.user
+            obj.save()
+            form = AnswerForm
+
+        self.object = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context['form'] = form
+        return self.render_to_response(context=context)

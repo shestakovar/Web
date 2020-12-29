@@ -1,5 +1,5 @@
 from django import forms
-from api.models import Dish, Ingredient, Comment
+from api.models import Dish, Ingredient, Comment, Question, Answer
 
 
 class DishForm(forms.ModelForm):
@@ -26,6 +26,27 @@ class IngredientForm(forms.Form):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
+        fields = ('content',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
+
+
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ('title', 'content')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
+
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = Answer
         fields = ('content',)
 
     def __init__(self, *args, **kwargs):
