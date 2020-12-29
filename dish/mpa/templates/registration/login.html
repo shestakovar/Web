@@ -7,11 +7,11 @@
 {% block content %}
 
 <div class="container col-3 mt-5">
+  <form method="post">
   {% csrf_token %}
   {{ form|crispy }}
   <div class="row" >
   <button type="submit" style="background-color: #361D62; border-radius: 5px; color: #ffffff" class="btn ml-3">Войти</button>
-  <form method="post">
     {% url 'register' as url_register %}
     <a href="{{url_register}}" style="border: 2px solid #361D62; border-radius: 5px; color: #361D62;" class="btn ml-3">Регистрация</a>
   </div>
