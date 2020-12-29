@@ -61,3 +61,8 @@ div#div_id_ingredient_list > div {
 .description {
     padding: 10px;
 }
+
+.btn-custom {
+    background-color: #361D62;
+    color: #361D62;
+}

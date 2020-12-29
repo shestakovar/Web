@@ -3,8 +3,50 @@
 {% block title %}Главная{% endblock %}
 
 {% block sort %}
+<style>
+  .pulse:hover {
+  -webkit-animation-name: pulse;
+  animation-name: pulse;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  }
+  @-webkit-keyframes pulse {
+  0% {
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  }
+  50% {
+  -webkit-transform: scale3d(1.05, 1.05, 1.05);
+  transform: scale3d(1.05, 1.05, 1.05);
+  }
+  100% {
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  }
+  }
+  @keyframes pulse {
+  0% {
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  }
+  50% {
+  -webkit-transform: scale3d(1.05, 1.05, 1.05);
+  transform: scale3d(1.05, 1.05, 1.05);
+  }
+  100% {
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  }
+  } 
+
+×
+</style>
+
 <div class="float-md-right bg-light px-md-2">
   <form method="get">
+    <div class="mt-5">
     <span>Сортировать по:</span>
     <div class="form-check p-2">
       <input class="form-check-input" type="radio" name="sortBy" id="exampleRadios1" value="alph" checked>
@@ -26,16 +68,17 @@
         Количеству комментариев
       </label>
     </div>
-    <button type="submit" class="btn btn-success p-2">Сортировать</button>
-  </form>
+    <button type="submit" style="background-color: #361D62; border-radius: 5px; color: #e6e6e6;" class="btn btn-none p-2">Сортировать</button>
+  </div>
+    </form>
 </div>
 {% endblock %}
 
 {% block content %}
-
+<div class="container">
 <div class="cards p-3">
   {% for i in list_dishes %}
-  <div class="card ">
+  <div class="card mt-5 pulse">
     <div class="embed-responsive embed-responsive-4by3">
       <img src="{{i.img.url}}" class="card-img-top embed-responsive-item " alt="...">
     </div>
@@ -48,22 +91,23 @@
         {% endfor %}
       </ul>
       </p>
-      <a href="{% url 'detail_page' i.pk %}" class="btn btn-primary mt-auto">Перейти</a>
+      <a href="{% url 'detail_page' i.pk %}" class="btn mt-auto" style="background-color: #361D62;">Перейти</a>
     </div>
     <div class="card-footer">
       Комментарии: {{ i.comment_set.count }}
       <form method='POST' action="add_remove_bookmark/{{i.id}}">
         {% csrf_token %}
         {% if request.user in i.bookmarks.all %}
-        <button type='submit'>Удалить из закладок</button>
+        <button type='submit' style="border: 2px solid #361D62; border-radius: 5px; color: #361D62;">Удалить из закладок</button>
         {% else %}
-        <button type='submit'>Добавить в закладки</button>
+        <button type='submit' style="border: 2px solid #361D62; border-radius: 5px; color: #361D62;">Добавить в закладки</button>
         {% endif %}
       </form>
       <div>В закладках у {{i.bookmarks.all.count}} пользователя(ей)</div>
     </div>
   </div>
   {% endfor %}
+</div>
 </div>
 
 {% endblock %}

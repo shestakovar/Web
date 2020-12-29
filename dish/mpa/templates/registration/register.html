@@ -5,11 +5,12 @@
 {% block title %}Регистрация{% endblock %}
 
 {% block content %}
-
+<div class="container col-4 mt-5">
 <form method="post">
   {% csrf_token %}
   {{ form|crispy }}
-  <button type="submit" class="btn btn-success">Зарегистрироваться</button>
+  <button type="submit" style="background-color: #361D62; border-radius: 5px; color: #ffffff" class="btn">Зарегистрироваться</button>
 </form>
+</div>
 
 {% endblock %}

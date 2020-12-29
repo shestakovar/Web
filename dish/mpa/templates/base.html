@@ -8,16 +8,25 @@
   <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-</head>
+  </head>
 
 <body>
-  <nav class="navbar navbar-expand-sm navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
+  <style>
+    .nav-link {
+      font-weight: 600;
+    }
+  </style>
+  <nav class="navbar navbar-expand-sm" style="background-color: #361D62;">
+    <div class="container">
+    <a class="navbar-brand" href="#"><img src="{% static 'img/Dish.png' %}" alt=""></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
+    <style>
+      a {color:cornsilk;}
+      a:hover {color: darkgray;}
+    </style>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         {% url 'home' as url_home %}
@@ -44,7 +53,11 @@
         <li class="nav-item {% if url_logout == request.path %}active{% endif %}">
           <a class="nav-link" href="{{url_logout}}?next={{request.path}}">Выйти</a>
         </li>
-        {{request.user}}
+        </li>
+        {% url 'logout' as url_logout %}
+        <li class="nav-item {% if url_logout == request.path %}active{% endif %}">
+          <div class="nav-link" style="font-weight: 600; color: #361D62; background-color: #fff; border-radius: 10px;">{{request.user}}</div>
+        </li>
         {% else %}
         {% url 'login' as url_login %}
         <li class="nav-item {% if url_login == request.path %}active{% endif %}">
@@ -55,15 +68,16 @@
 
       </ul>
     </div>
+  </div>
   </nav>
 
-  <div class="container-fluid bg-light">
+  <div class="container">
     {% block sort %}
     {% endblock %}
   </div>
 
 
-  <div class="container-fluid bg-light">
+  <div class="container;">
     {% block content %}
     {% endblock %}
   </div>
